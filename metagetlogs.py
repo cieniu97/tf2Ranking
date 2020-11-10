@@ -61,6 +61,8 @@ class GetLogs:
                 #     self.download(data, log, "Subbed-Lobby")
                 else:
                     print("Game plaied with not enough players - Not eligible for statistics")
+            elif (self.gamemode == False):
+                self.download(data, log)
             else:
                 print('Invalid log, not containing players')
 
@@ -97,7 +99,7 @@ class InputListLogs:
             for player in self.players:
                 listOfplayers = listOfplayers + player + ","
             listOfplayers = listOfplayers[:-1]
-            urlJson += "&players=" + str(self.players)
+            urlJson += "&player=" + str(listOfplayers)
         if self.limit is not False:
             urlJson += "&limit=" + str(self.limit)
         if self.offset is not False:
@@ -119,23 +121,20 @@ class InputListLogs:
 
 inputData = InputListLogs()
 
-inputData.limit = 10
+inputData.limit = 100
 # How many logs you wish to download
 
-inputData.title = "Combined"
+inputData.title = ""
 # Title of logs must containing
 
-# inputData.map = map
+inputData.map = ""
 
-# inputData.uploader = uploader
+inputData.uploader = ""
 
-# inputData.players = players
+inputData.players = ['76561198051881261']
 # players should be displayed as array of steamID64 for example [steamID64, steamID64, steamID64, steamID64]
 
-# inputData.limit = limit
-
-
-# inputData.offset = offset
+inputData.offset = 0
 # from what log you wish to start your limit - default is 0 so logs are newest
 
 
@@ -143,7 +142,7 @@ listOfLogs = namesOfLogs(inputData.getData())
 
 new = GetLogs()
 new.logs = listOfLogs
-new.gamemode = 6
-new.saveLocation = 'logs/test/'
+new.gamemode = 9
+new.saveLocation = 'output/'
 new.checkIfLogExists()
 new.access()
